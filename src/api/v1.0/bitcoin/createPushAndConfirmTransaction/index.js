@@ -3,7 +3,6 @@ const router = new Router();
 const bitcoin = require('bitcoinjs-lib');
 const Q = require('q');
 const request = require('request');
-const testnet = bitcoin.networks.testnet;
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
@@ -161,14 +160,14 @@ exports.createPushAndConfirmTransaction = function(fromWIF, txHashOrigin, toAddr
      *  [String] hex: the transaction hex script to push into the blockchain.
      */
     exports.newTransaction = function(fromWIF, txHashOrigin, toAddress, value) {
-        var kpFrom = bitcoin.ECPair.fromWIF(fromWIF,testnet);
+        var kpFrom = bitcoin.ECPair.fromWIF(fromWIF);
         //var kpFrom = bitcoin.ECPair.fromWIF(fromWIF);
      
-        var tx = new bitcoin.TransactionBuilder(testnet);
+        var tx = new bitcoin.TransactionBuilder();
         tx.addInput(txHashOrigin, 0);
         tx.addOutput(toAddress, value);
         var privateKeyWIF = fromWIF;
-        var kpFrom = bitcoin.ECPair.fromWIF(privateKeyWIF,testnet);
+        var kpFrom = bitcoin.ECPair.fromWIF(privateKeyWIF);
         tx.sign(0, kpFrom);
         return {
             hex: tx.build().toHex()

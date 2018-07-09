@@ -1,7 +1,6 @@
 const Router = require('koa-router');
 const router = new Router();
 const bitcoin = require('bitcoinjs-lib');
-var testnet = bitcoin.networks.testnet;
 const Q = require('q');
 
 router.get('/', async (ctx) => {
@@ -18,7 +17,7 @@ module.exports = router;
  */
 
 function newWallet() {
-    var keyPair = bitcoin.ECPair.makeRandom({ network: testnet });
+    var keyPair = bitcoin.ECPair.makeRandom();
     return {
         wif: keyPair.toWIF(),
         address: keyPair.getAddress()
