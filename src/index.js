@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
 const Router = require('koa-router');
 
 // api handler
@@ -17,6 +18,8 @@ const {
 const app = new Koa();
 const router = new Router();
 
+app.use(bodyParser());
+
 // set route for api
 router.use('/api', api.routes());
 app.use(router.routes());
@@ -24,5 +27,5 @@ app.use(router.allowedMethods());
 
 // listen
 app.listen(port, () => {
-  console.log(`PulsePro is listening to port ${port}`);
+  console.log(`Cryptocurrency payment API is listening to port ${port}`);
 });
